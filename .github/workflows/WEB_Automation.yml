@@ -62,4 +62,5 @@ jobs:
           echo "### 🥒 Web Automation Test Result" >> $GITHUB_STEP_SUMMARY
           echo "- Environment: GitHub Actions" >> $GITHUB_STEP_SUMMARY
           echo "- Report Type: Cucumber HTML Report" >> $GITHUB_STEP_SUMMARY
-          echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.repository.name }}/web/" >> $GITHUB_STEP_SUMMARY
+          echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/web/" >> $GITHUB_STEP_SUMMARY
+      

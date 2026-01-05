@@ -49,7 +49,8 @@ jobs:
 
       - name: Add Allure Report link to Summary
         run: |
-          echo "### 🧪 API Automation Test Result" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔹 API Automation Test Result" >> $GITHUB_STEP_SUMMARY
           echo "- Environment: GitHub Actions" >> $GITHUB_STEP_SUMMARY
           echo "- Report Type: Allure HTML Report" >> $GITHUB_STEP_SUMMARY
-          echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.repository.name }}/" >> $GITHUB_STEP_SUMMARY
+          echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_STEP_SUMMARY
+      
