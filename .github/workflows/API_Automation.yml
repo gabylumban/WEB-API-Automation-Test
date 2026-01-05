@@ -2,15 +2,19 @@ name: API Automation with Allure
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: gh-pages-api
+  cancel-in-progress: true
 
 jobs:
   api-tests:
@@ -28,25 +32,27 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Allure CLI
-        run: npm install -g allure-commandline --save-dev #install allure
+        run: npm install -g allure-commandline --save-dev
 
-      - name: Build with Gradle
-        run:
-          chmod +x ./gradlew #make gradlew executable
-
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
 
       - name: Run Tests
-        run: ./gradlew clean test  # Run tests after the build step
+        run: ./gradlew clean test
 
       - name: Generate Allure Report
-        run: allure generate build/allure-results -o allure-report --clean  # Generate Allure report after tests
+        run: allure generate build/allure-results -o allure-report --clean
 
-      # Deploy to GitHub Pages
-      - name: Deploy to GitHub  Pages
-        if: always()
+      - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          personal_token : ${{ secrets.PERSONAL_TOKEN }}
-          publish_dir: API-Test/allure-report  # Directory to publish
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          publish_dir: API-Test/allure-report
           publish_branch: gh-pages
-          destination_dir: api  # folder di gh-pages
+          destination_dir: api  # <-- folder di gh-pages
+
+      - name: Add Allure Report link to Summary
+        run: |
+          REPORT_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY}/api/"
+          echo "### 🧪 API Automation Report" >> $GITHUB_STEP_SUMMARY
+          echo "- URL: $REPORT_URL" >> $GITHUB_STEP_SUMMARY
