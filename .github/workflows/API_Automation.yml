@@ -2,9 +2,9 @@ name: API Automation with Allure
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 permissions:
