@@ -45,18 +45,18 @@ jobs:
           name: allure-report
           path: API-Test/allure-report
 
+
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.PERSONAL_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_TOKEN }}  # lebih aman
           publish_dir: ./API-Test/allure-report
-          publish_branch: gh-pages-api  # <- terpisah dari Web
-          destination_dir: ./  # root folder
+          publish_branch: gh-pages-api
+          destination_dir: allure-report  # simpan di sub-folder
 
       - name: Add Allure Report link to Summary
         run: |
-          echo "### 🔹 API Automation Test Result" >> $GITHUB_STEP_SUMMARY
-          echo "- Environment: GitHub Actions" >> $GITHUB_STEP_SUMMARY
-          echo "- Report Type: Allure HTML Report" >> $GITHUB_STEP_SUMMARY
-          echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_STEP_SUMMARY
-      
+            echo "### 🔹 API Automation Test Result" >> $GITHUB_STEP_SUMMARY
+            echo "- Environment: GitHub Actions" >> $GITHUB_STEP_SUMMARY
+            echo "- Report Type: Allure HTML Report" >> $GITHUB_STEP_SUMMARY
+            echo "- Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure-report/" >> $GITHUB_STEP_SUMMARY
